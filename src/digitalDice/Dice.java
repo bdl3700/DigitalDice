@@ -31,8 +31,6 @@ public class Dice {
 	}
 
 	public static void main(String[] args) {
-		// TODO do some tests
-
 		// tests if a six sided die provides acceptable values (1-6) on 1000 rolls and
 		// stops rolling if anything is out of line
 
