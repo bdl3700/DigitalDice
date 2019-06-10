@@ -10,6 +10,8 @@ package digitalDice;
  * 
  * TODO: create a nice visual interface to allow for easy use.
  * 
+ * TODO: different types of rolls: quick D20, multiple die summed, etc
+ * 
  * @author Bryce L
  *
  */
