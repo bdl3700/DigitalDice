@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * @author Bryce
+ *
+ */
+module digitalDice {
+}
