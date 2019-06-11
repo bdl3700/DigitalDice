@@ -1,4 +1,4 @@
-package digitalDice;
+package src;
 
 /**
  * This class provides the implementation of two varations of D10; The first
@@ -31,6 +31,17 @@ public class D10 extends Dice {
 			return roll * 10;
 
 		return roll;
+	}
+	
+	/**
+	 * Returns a string describing the type of D10
+	 */
+	@Override
+	public String type() {
+		if (PERCENTDICE) {
+			return "D10p";
+		}
+		return "D10";
 	}
 
 	public static void main(String[] args) {

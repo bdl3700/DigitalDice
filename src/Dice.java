@@ -1,4 +1,4 @@
-package digitalDice;
+package src;
 
 import java.util.Random;
 
@@ -28,6 +28,15 @@ public class Dice {
 	public int roll() {
 		int rolledNumber = rand.nextInt(SIDES) + 1;
 		return rolledNumber;
+	}
+	
+	/**
+	 * Outputs the type of dice based on the number of sides.
+	 * 
+	 * @return
+	 */
+	public String type() {
+		return "D" + SIDES;
 	}
 
 	public static void main(String[] args) {
