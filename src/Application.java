@@ -26,12 +26,13 @@ import java.awt.Dimension;
 
 /**
  * This class provides the structure of an application that handles digital dice
- * of various sizes, planned dice include a D4, D6, D8, D10, D12, D20, and a D10
- * percentile dice.
+ * of various sizes, dice include a D4, D6, D8, D10, D12, D20, and a D10
+ * percentile dice. Basic functionality is such that one can create a list of
+ * dice to roll and then recieve the sum of the numbers provided. The user has
+ * the options of a list of dice of their selection, or a quick D20 roll.
  * 
- * TODO: create a nice visual interface to allow for easy use.
- * 
- * TODO: different types of rolls: quick D20, multiple die summed, etc
+ * TODO: Add a keyListener such that one can operate the application through use
+ * of the keyboard without a mouse.
  * 
  * @author Bryce L
  *
@@ -60,13 +61,13 @@ public class Application extends JPanel implements ActionListener, KeyListener{
 	private static JButton d12Button;
 	private static JButton d20Button;
 	
-	private int lastRollTotal;
+	private static int lastRollTotal;
 	private static JLabel lastRollLabel = new JLabel("Last roll: ");
 	private static JLabel activeDiceLabel = new JLabel("Active Dice: ");
 	
 	//sets up other buttons
-	private static JButton roll;
 	private static JButton quickD20;
+	private static JButton roll;
 	private static JButton clearDice;
 	
 	private static ArrayList<Dice> dice; //currently active dice go in here
@@ -82,34 +83,32 @@ public class Application extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	/**
-	 * Does a quick roll of a D20 and then clears the list of active dice.
+	 * Does a quick roll of a D20 leaving the active dice as they are.
 	 */
-	private void quickD20() {
+	private static void quickD20() {
 		lastRollTotal = d20.roll();
 		lastRollLabel.setText("Last roll: " + lastRollTotal);
 	}
 	
 	/**
-	 * Rolls each active dice and totals them. Then clears the list of dice.
+	 * Rolls each active dice and totals them.
 	 */
-	private void roll() {
+	private static void roll() {
 		int rollTotal = 0;
 		for (Dice d : dice) {
 			rollTotal += d.roll();
 		}
 		lastRollTotal = rollTotal;
 		lastRollLabel.setText("Last roll: " + lastRollTotal);
-		clearDice();
 	}
 	
 	/**
 	 * removes all dice from the ArrayList dice.
 	 */
-	private void clearDice() {
-		for (Dice d : dice) {
-			dice.remove(d);
-		}
-		activeDiceLabel.setText("");
+	private static void clearDice() {
+		dice = new ArrayList<>();
+		
+		activeDiceLabel.setText("Active Dice: ");
 	}
 	
 	/**
@@ -154,52 +153,183 @@ public class Application extends JPanel implements ActionListener, KeyListener{
 				System.out.println("D4 Clicked");
 			}
 		});
-
-//		redButton = new JButton("Red");
-//		c.fill = GridBagConstraints.HORIZONTAL;
-//		c.weightx = 0.0;
-//		c.gridx = 1;
-//		c.gridy = 0;
-//		pane.add(redButton, c);
-//		redButton.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// everything that happens when the Red Button is Pressed
-//				typeSelected = "Red";
-//
-//				if (placingDefenders)
-//					placingDefenders = false;
-//				else
-//					placingDefenders = true;
-//				System.out.println("RedButton Clicked");
-//			}
-//		});
-//
-//		greenButton = new JButton("Green");
-//		c.fill = GridBagConstraints.HORIZONTAL;
-//		c.weightx = 0.0;
-//		c.gridx = 2;
-//		c.gridy = 0;
-//		pane.add(greenButton, c);
-//		greenButton.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// everything that happens when the Green Button is Pressed
-//				typeSelected = "Green";
-//
-//				if (placingDefenders)
-//					placingDefenders = false;
-//				else
-//					placingDefenders = true;
-//				System.out.println("GreenButton Clicked");
-//			}
-//		});
-//
+		
+		d6Button = new JButton("D6");
+		c.weightx = 0.0;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 0.5;
+		c.gridx = 1;
+		c.gridy = 0;
+		pane.add(d6Button, c);
+		d6Button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// everything that happens when the D6 Button is pressed.
+				
+				dice.add(d6);
+				updateActiveDiceLabel();
+				
+				System.out.println("D6 Clicked");
+			}
+		});
+		
+		d8Button = new JButton("D8");
+		c.weightx = 0.0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 0;
+		pane.add(d8Button, c);
+		d8Button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// everything that happens when the D8 Button is pressed.
+				
+				dice.add(d8);
+				updateActiveDiceLabel();
+				
+				System.out.println("D8 Clicked");
+			}
+		});
+		
+		d10Button = new JButton("D10");
+		c.weightx = 0.0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 3;
+		c.gridy = 0;
+		pane.add(d10Button, c);
+		d10Button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// everything that happens when the D10 Button is pressed.
+				
+				dice.add(d10);
+				updateActiveDiceLabel();
+				
+				System.out.println("D10 Clicked");
+			}
+		});
+		
+		d10pButton = new JButton("D10p");
+		c.weightx = 0.0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 4;
+		c.gridy = 0;
+		pane.add(d10pButton, c);
+		d10pButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// everything that happens when the D10p Button is pressed.
+				
+				dice.add(d10p);
+				updateActiveDiceLabel();
+				
+				System.out.println("D10p Clicked");
+			}
+		});
+		
+		d12Button = new JButton("D12");
+		c.weightx = 0.0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 5;
+		c.gridy = 0;
+		pane.add(d12Button, c);
+		d12Button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// everything that happens when the D12 Button is pressed.
+				
+				dice.add(d12);
+				updateActiveDiceLabel();
+				
+				System.out.println("D12 Clicked");
+			}
+		});
+		
+		d20Button = new JButton("D20");
+		c.weightx = 0.0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 6;
+		c.gridy = 0;
+		pane.add(d20Button, c);
+		d20Button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// everything that happens when the D20 Button is pressed.
+				
+				dice.add(d20);
+				updateActiveDiceLabel();
+				
+				System.out.println("D20 Clicked");
+			}
+		});
+
+		//adds the activeDiceLabel
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = 5;
+		c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 1;
 		pane.add(activeDiceLabel, c);
+		
+		//adds the lastRollLabel
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = 2;
+		c.weightx = 0;
+		c.gridx = 5;
+		c.gridy = 1;
+		pane.add(lastRollLabel, c);
+		
+		quickD20 = new JButton("Quick D20");
+		c.weightx = 0.0;
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 2;
+		pane.add(quickD20, c);
+		quickD20.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// everything that happens when the quickD20 Button is pressed.
+				
+				quickD20();
+				
+				System.out.println("quickD20 Clicked");
+			}
+		});
+		
+		roll = new JButton("Roll");
+		c.weightx = 0.0;
+		c.gridwidth = 5;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 2;
+		pane.add(roll, c);
+		roll.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// everything that happens when the roll Button is pressed.
+				
+				roll();
+				
+				System.out.println("Roll Clicked");
+			}
+		});
+		
+		clearDice = new JButton("Clear Dice");
+		c.weightx = 0.0;
+		c.gridwidth = 1;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 6;
+		c.gridy = 2;
+		pane.add(clearDice, c);
+		clearDice.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// everything that happens when the clearDice Button is pressed.
+				
+				clearDice();
+				
+				System.out.println("Clear Dice Clicked");
+			}
+		});
 
 		Application panel = new Application(); // Creates the app instance
 
