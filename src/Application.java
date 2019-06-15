@@ -20,6 +20,8 @@ import java.awt.event.KeyListener;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.Container;
 import java.awt.Dimension;
 
@@ -37,7 +39,7 @@ import java.awt.Dimension;
  * @author Bryce L
  *
  */
-public class Application extends JPanel implements ActionListener, KeyListener{
+public class Application extends JPanel implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -72,14 +74,113 @@ public class Application extends JPanel implements ActionListener, KeyListener{
 	
 	private static ArrayList<Dice> dice; //currently active dice go in here
 	
+	private long lastKeyPressTime = 0;
+	private long minKeyPressInterval = 200;
+	
 	/**
-	 * sets up the basic objects for each set of dice.
+	 * sets up the basic objects for each set of dice including a keyEventDispatcher.
 	 */
 	public Application() {
 		super();
 		
 		dice = new ArrayList<>();
-		
+
+		//adds a new KeyEventDispatcher to handle all key presses before they get to the other events.
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+
+			@Override
+			public boolean dispatchKeyEvent(KeyEvent e) {
+				// TODO Add each Key
+				
+				if (System.currentTimeMillis() - lastKeyPressTime > minKeyPressInterval) {
+					
+					//when enter is pressed
+					if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+						roll();
+						
+						System.out.println("Dice Rolled");
+					}
+					
+					//when the 4 key is pressed
+					if (e.getKeyChar() == KeyEvent.VK_4) {
+						dice.add(d4);
+						updateActiveDiceLabel();
+						
+						System.out.println("D4 Added");
+					}
+					
+					//when the 6 key is pressed
+					if (e.getKeyChar() == KeyEvent.VK_6) {
+						dice.add(d6);
+						updateActiveDiceLabel();
+						
+						System.out.println("D6 Added");
+					
+					}
+					
+					//when the 8 key is pressed
+					if (e.getKeyChar() == KeyEvent.VK_8) {
+						dice.add(d8);
+						updateActiveDiceLabel();
+						
+						System.out.println("D8 Added");
+					}
+					
+					//when the 9 key is pressed
+					if (e.getKeyChar() == KeyEvent.VK_9) {
+						dice.add(d10);
+						updateActiveDiceLabel();
+						
+						System.out.println("D10 Added");
+					}
+					
+					//when the 0 key is pressed
+					if (e.getKeyChar() == KeyEvent.VK_0) {
+						dice.add(d10p);
+						updateActiveDiceLabel();
+						
+						System.out.println("D10p Added");
+					}
+					
+					//when the 1 key is pressed
+					if (e.getKeyChar() == KeyEvent.VK_1) {
+						dice.add(d12);
+						updateActiveDiceLabel();
+						
+						System.out.println("D12 Added");
+					}
+					
+					//when the 2 key is pressed
+					if (e.getKeyChar() == KeyEvent.VK_2) {
+						dice.add(d20);
+						updateActiveDiceLabel();
+						
+						System.out.println("D20 Added");
+					}
+					
+					//when the delete or backspace buttons are pressed
+					if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE || e.getKeyChar() == KeyEvent.VK_DELETE) {
+						clearDice();
+						
+						System.out.println("Active Dice Cleared");
+					}
+					
+					//when the period key or backslash buttons are pressed
+					if (e.getKeyChar() == KeyEvent.VK_PERIOD || e.getKeyChar() == KeyEvent.VK_BACK_SLASH) {
+						quickD20();
+						
+						System.out.println("quickD20 Rolled");
+					}
+					
+					//if an action is performed then the keystroke timer restarts.
+					lastKeyPressTime = System.currentTimeMillis();
+				}
+				
+				//don't keep trying to handle key strokes
+				return true;
+			}
+			
+		});
 	}
 	
 	/**
@@ -358,24 +459,6 @@ public class Application extends JPanel implements ActionListener, KeyListener{
 					}
 				});
 
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
