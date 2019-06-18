@@ -33,8 +33,8 @@ import java.awt.Dimension;
  * dice to roll and then recieve the sum of the numbers provided. The user has
  * the options of a list of dice of their selection, or a quick D20 roll.
  * 
- * TODO: Add a keyListener such that one can operate the application through use
- * of the keyboard without a mouse.
+ * TODO: Scale the application to a reasonable size that is based on a ratio of
+ * the screen
  * 
  * @author Bryce L
  *
